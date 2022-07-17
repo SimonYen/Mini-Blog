@@ -4,145 +4,145 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 	<title>
 		{% block title %}
-		轻博客
+		迷你博客
 		{% endblock %}
 	</title>
-	{{ toastr.include_jquery() }}
-	{{ toastr.include_toastr_css() }}
-	{{ toastr.message() }}
 </head>
 
 <body>
-	<nav class="container-fluid">
-		<li><strong>轻博客</strong></li>
-		</ul>
-		<ul>
-			<li><a href={{url_for('views.home')}} role="button">主页</a></li>
-			{% if user.is_authenticated %}
-			<li><a href={{url_for('views.create_post')}} role="button">新建帖子</a></li>
-			<li><a href={{url_for('auth.logout')}} role="button">登出</a></li>
-			{% else %}
-			<li><a href={{url_for('auth.login')}} role="button">登录</a></li>
-			<li><a href={{url_for('auth.signup')}} role="button">注册</a></li>
-			{% endif %}
-			<li><a href={{url_for('views.about')}} role="button">关于作者</a></li>
-			<li>
-				<details role="list" dir="rtl">
-					<summary aria-haspopup="listbox" role="link" class="secondary">切换主题</summary>
-					<ul role="listbox">
-						<li><a href="#" data-theme-switcher="auto">自动</a></li>
-						<li><a href="#" data-theme-switcher="light">明亮</a></li>
-						<li><a href="#" data-theme-switcher="dark">深邃</a></li>
-					</ul>
-				</details>
-			</li>
-		</ul>
+	<nav class="navbar" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+			<a class="navbar-item" href="{{ url_for('views.home' ) }}">
+				<img src="{{ url_for('static' , filename = 'logo.png') }}">
+			</a>
+			<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+				data-target="navbarBasicExample">
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+			</a>
+		</div>
+
+		<div id="navbarBasicExample" class="navbar-menu">
+			<div class="navbar-start">
+				<a class="navbar-item" href="{{ url_for('views.home' ) }}">
+					主页
+				</a>
+				{% if user.is_authenticated %}
+				<a class="navbar-item" href="{{ url_for('views.create_post' ) }}">
+					新建帖子
+				</a>
+				{% endif %}
+
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link">
+						更多
+					</a>
+
+					<div class="navbar-dropdown">
+						<a class="navbar-item">
+							Jobs
+						</a>
+						<a class="navbar-item">
+							联系作者
+						</a>
+						<hr class="navbar-divider">
+						<a class="navbar-item" href="{{ url_for('views.about' ) }}">
+							关于作者
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="navbar-end">
+				<div class="navbar-item">
+					<div class="buttons">
+						{% if user.is_authenticated %}
+						<a href="{{ url_for('auth.logout' ) }}" class="button is-danger">登出</a>
+						{% else %}
+						<a class="button is-primary" href="{{ url_for('auth.signup' ) }}">
+							<strong>注册</strong>
+						</a>
+						<a class="button is-info" href="{{ url_for('auth.login' ) }}">
+							登录
+						</a>
+
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
 	</nav>
-	<main class="container">
+	{% for message in get_flashed_messages() %}
+	<div class="notification is-primary">
+		<button class="delete"></button>
+		{{message}}
+	</div>
+	{% endfor %}
+	<section class="section">
 		{% block content %}
 
 		{% endblock %}
-	</main>
-	<footer class="container-fluid">
-		<small>Simon Yen编写，我的<a href="https://github.com/SimonYen">Github</a>，欢迎star！</small>
+	</section>
+	<footer class="footer">
+		<div class="content has-text-centered">
+			<p>
+				<strong>迷你博客</strong>由<a href="https://github.com/SimonYen">Simon Yen</a>编写，欢迎star！
+			</p>
+		</div>
 	</footer>
 	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			(document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+				const $notification = $delete.parentNode;
 
-		/*!
-		 * Minimal theme switcher
-		 *
-		 * Pico.css - https://picocss.com
-		 * Copyright 2019-2022 - Licensed under MIT
-		 */
-
-		const themeSwitcher = {
-
-			// Config
-			_scheme: "auto",
-			menuTarget: "details[role='list']",
-			buttonsTarget: "a[data-theme-switcher]",
-			buttonAttribute: "data-theme-switcher",
-			rootAttribute: "data-theme",
-			localStorageKey: "picoPreferedColorScheme",
-
-			// Init
-			init() {
-				this.scheme = this.schemeFromLocalStorage;
-				this.initSwitchers();
-			},
-
-			// Get color scheme from local storage
-			get schemeFromLocalStorage() {
-				if (typeof window.localStorage !== "undefined") {
-					if (window.localStorage.getItem(this.localStorageKey) !== null) {
-						return window.localStorage.getItem(this.localStorageKey);
-					}
-				}
-				return this._scheme;
-			},
-
-			// Prefered color scheme
-			get preferedColorScheme() {
-				return window.matchMedia("(prefers-color-scheme: dark)").matches
-					? "dark"
-					: "light";
-			},
-
-			// Init switchers
-			initSwitchers() {
-				const buttons = document.querySelectorAll(this.buttonsTarget);
-				buttons.forEach((button) => {
-					button.addEventListener("click", event => {
-						event.preventDefault();
-						// Set scheme
-						this.scheme = button.getAttribute(this.buttonAttribute);
-						// Close dropdown
-						document.querySelector(this.menuTarget).removeAttribute("open");
-					}, false);
+				$delete.addEventListener('click', () => {
+					$notification.parentNode.removeChild($notification);
 				});
-			},
-
-			// Set scheme
-			set scheme(scheme) {
-				if (scheme == "auto") {
-					this.preferedColorScheme == "dark"
-						? (this._scheme = "dark")
-						: (this._scheme = "light");
-				} else if (scheme == "dark" || scheme == "light") {
-					this._scheme = scheme;
-				}
-				this.applyScheme();
-				this.schemeToLocalStorage();
-			},
-
-			// Get scheme
-			get scheme() {
-				return this._scheme;
-			},
-
-			// Apply scheme
-			applyScheme() {
-				document
-					.querySelector("html")
-					.setAttribute(this.rootAttribute, this.scheme);
-			},
-
-			// Store scheme to local storage
-			schemeToLocalStorage() {
-				if (typeof window.localStorage !== "undefined") {
-					window.localStorage.setItem(this.localStorageKey, this.scheme);
-				}
-			},
-		};
-
-		// Init
-		themeSwitcher.init();
+			});
+		});
 	</script>
-	{{ toastr.include_toastr_js() }}
+	<script>
+		(function () {
+			var burger = document.querySelector('.nav-toggle');
+			var menu = document.querySelector('.nav-menu');
+			burger.addEventListener('click', function () {
+				burger.classList.toggle('is-active');
+				menu.classList.toggle('is-active');
+			});
+		})();
+	</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+
+			// Get all "navbar-burger" elements
+			const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+			// Check if there are any navbar burgers
+			if ($navbarBurgers.length > 0) {
+
+				// Add a click event on each of them
+				$navbarBurgers.forEach(el => {
+					el.addEventListener('click', () => {
+
+						// Get the target from the "data-target" attribute
+						const target = el.dataset.target;
+						const $target = document.getElementById(target);
+
+						// Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+						el.classList.toggle('is-active');
+						$target.classList.toggle('is-active');
+
+					});
+				});
+			}
+
+		});
+	</script>
 </body>
 
 </html>

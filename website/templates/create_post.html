@@ -3,16 +3,16 @@
 新建帖子
 {% endblock %}
 {% block content %}
-<article>
+<div class="box">
 	<form method="post">
-		<hgroup>
-			<h1>新建一个帖子</h1>
-			<h2>请输入标题和内容</h2>
-		</hgroup>
-		<h3>标题</h3>
-		<input type="text" name="title" required>
-		{{ mdeditor.load() }}
-		<button type="submit" class="contrast">提交</button>
+		<div class="field">
+			<label class="label">标题</label>
+			<div class="control">
+				<input class="input" type="text" placeholder="帖子标题" name="title">
+				{{ mdeditor.load() }}
+				<button class="button is-primary">提交</button>
+			</div>
+		</div>
 	</form>
-</article>
+</div>
 {% endblock %}

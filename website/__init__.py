@@ -2,7 +2,6 @@ from os import path
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_toastr import Toastr
 from flask_mdeditor import MDEditor
 from flaskext.markdown import Markdown
 
@@ -10,7 +9,6 @@ BASEDIR = path.abspath(path.dirname(__file__))
 DB_NAME = 'database.db'
 
 db = SQLAlchemy()
-toastr = Toastr()
 mdeditor = MDEditor()
 
 
@@ -20,10 +18,8 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['SQLALCHEMY_COMMIT_TEARDOWN'] = True
-    app.config['TOASTR_PREVENT_DUPLICATES'] = 'true'
     app.config['MDEDITOR_FILE_UPLOADER'] = path.join(BASEDIR, 'uploads')
     db.init_app(app)
-    toastr.init_app(app)
     mdeditor.init_app(app)
     Markdown(app)
 

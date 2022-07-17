@@ -36,12 +36,6 @@ def check_post(id):
     return render_template('check_post.html', post=p, user=current_user)
 
 
-@views.route('/delete_post_dialog/<id>')
-@login_required
-def delete_post_dialog(id):
-    p = Post.query.filter_by(id=id).first()
-    return render_template('delete_post_dialog.html', post=p, user=current_user)
-
 
 @views.route('/delete_post/<id>')
 @login_required
