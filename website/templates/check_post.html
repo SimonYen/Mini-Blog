@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+post.title
+{% endblock %}
+{% block content %}
+<article>
+	<strong>{{post.title}}</strong>
+	<p>
+		<ins>
+			作者：{{post.user.username}}
+		</ins>
+	</p>
+	<p>
+		<mark>
+			上传时间：{{post.date_created}}
+		</mark>
+	</p>
+</article>
+<article>
+	{% filter markdown %}
+	{{post.content}}
+	{% endfilter %}
+</article>
+{% endblock %}

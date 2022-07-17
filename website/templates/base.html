@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	<title>
+		{% block title %}
+		轻博客
+		{% endblock %}
+	</title>
+	{{ toastr.include_jquery() }}
+	{{ toastr.include_toastr_css() }}
+	{{ toastr.message() }}
+</head>
+
+<body>
+	<nav class="container-fluid">
+		<li><strong>轻博客</strong></li>
+		</ul>
+		<ul>
+			<li><a href={{url_for('views.home')}} role="button">主页</a></li>
+			{% if user.is_authenticated %}
+			<li><a href={{url_for('views.create_post')}} role="button">新建帖子</a></li>
+			<li><a href={{url_for('auth.logout')}} role="button">登出</a></li>
+			{% else %}
+			<li><a href={{url_for('auth.login')}} role="button">登录</a></li>
+			<li><a href={{url_for('auth.signup')}} role="button">注册</a></li>
+			{% endif %}
+			<li><a href={{url_for('views.about')}} role="button">关于作者</a></li>
+			<li>
+				<details role="list" dir="rtl">
+					<summary aria-haspopup="listbox" role="link" class="secondary">切换主题</summary>
+					<ul role="listbox">
+						<li><a href="#" data-theme-switcher="auto">自动</a></li>
+						<li><a href="#" data-theme-switcher="light">明亮</a></li>
+						<li><a href="#" data-theme-switcher="dark">深邃</a></li>
+					</ul>
+				</details>
+			</li>
+		</ul>
+	</nav>
+	<main class="container">
+		{% block content %}
+
+		{% endblock %}
+	</main>
+	<footer class="container-fluid">
+		<small>Simon Yen编写，我的<a href="https://github.com/SimonYen">Github</a>，欢迎star！</small>
+	</footer>
+	<script>
+
+		/*!
+		 * Minimal theme switcher
+		 *
+		 * Pico.css - https://picocss.com
+		 * Copyright 2019-2022 - Licensed under MIT
+		 */
+
+		const themeSwitcher = {
+
+			// Config
+			_scheme: "auto",
+			menuTarget: "details[role='list']",
+			buttonsTarget: "a[data-theme-switcher]",
+			buttonAttribute: "data-theme-switcher",
+			rootAttribute: "data-theme",
+			localStorageKey: "picoPreferedColorScheme",
+
+			// Init
+			init() {
+				this.scheme = this.schemeFromLocalStorage;
+				this.initSwitchers();
+			},
+
+			// Get color scheme from local storage
+			get schemeFromLocalStorage() {
+				if (typeof window.localStorage !== "undefined") {
+					if (window.localStorage.getItem(this.localStorageKey) !== null) {
+						return window.localStorage.getItem(this.localStorageKey);
+					}
+				}
+				return this._scheme;
+			},
+
+			// Prefered color scheme
+			get preferedColorScheme() {
+				return window.matchMedia("(prefers-color-scheme: dark)").matches
+					? "dark"
+					: "light";
+			},
+
+			// Init switchers
+			initSwitchers() {
+				const buttons = document.querySelectorAll(this.buttonsTarget);
+				buttons.forEach((button) => {
+					button.addEventListener("click", event => {
+						event.preventDefault();
+						// Set scheme
+						this.scheme = button.getAttribute(this.buttonAttribute);
+						// Close dropdown
+						document.querySelector(this.menuTarget).removeAttribute("open");
+					}, false);
+				});
+			},
+
+			// Set scheme
+			set scheme(scheme) {
+				if (scheme == "auto") {
+					this.preferedColorScheme == "dark"
+						? (this._scheme = "dark")
+						: (this._scheme = "light");
+				} else if (scheme == "dark" || scheme == "light") {
+					this._scheme = scheme;
+				}
+				this.applyScheme();
+				this.schemeToLocalStorage();
+			},
+
+			// Get scheme
+			get scheme() {
+				return this._scheme;
+			},
+
+			// Apply scheme
+			applyScheme() {
+				document
+					.querySelector("html")
+					.setAttribute(this.rootAttribute, this.scheme);
+			},
+
+			// Store scheme to local storage
+			schemeToLocalStorage() {
+				if (typeof window.localStorage !== "undefined") {
+					window.localStorage.setItem(this.localStorageKey, this.scheme);
+				}
+			},
+		};
+
+		// Init
+		themeSwitcher.init();
+	</script>
+	{{ toastr.include_toastr_js() }}
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+轻博客-登录
+{% endblock %}
+{% block content %}
+<article>
+	<hgroup>
+		<h1>登录</h1>
+		<h2>请输入你的邮箱和密码</h2>
+	</hgroup>
+	<form method="post">
+		<input type="email" name="email" placeholder="邮箱地址" required>
+		<input type="password" name="password" placeholder="密码" required>
+		<fieldset>
+			<label for="remember">
+				<input type="checkbox" role="switch" name="remember">
+				记住我
+			</label>
+		</fieldset>
+		<button type="submit" class="contrast">确认</button>
+	</form>
+</article>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+主页
+{% endblock %}
+
+{% block content %}
+{% for post in posts %}
+<article>
+	<nav>
+		<ul>
+			<details>
+				<summary><i>{{post.title}}</i></summary>
+				<p>
+					<ins>
+						作者：{{post.user.username}}
+					</ins>
+				</p>
+				<p>
+					<mark>
+						上传时间：{{post.date_created}}
+					</mark>
+				</p>
+			</details>
+		</ul>
+		<ul>
+			<li>
+				<a href={{url_for('views.check_post',id=post.id)}} role="button">查看</a>
+			</li>
+			{% if user.id == post.author %}
+			<li>
+				<a href={{url_for('views.delete_post_dialog',id=post.id)}} role="button" class="contrast">删除</a>
+			</li>
+			{% endif %}
+		</ul>
+	</nav>
+</article>
+{% endfor %}
+{% endblock %}
