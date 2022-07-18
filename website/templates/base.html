@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<nav class="navbar" role="navigation" aria-label="main navigation">
+	<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
 		<div class="navbar-brand">
 			<a class="navbar-item" href="{{ url_for('views.home' ) }}">
 				<img src="{{ url_for('static' , filename = 'logo.png') }}">
@@ -78,7 +78,7 @@
 		</div>
 	</nav>
 	{% for message in get_flashed_messages() %}
-	<div class="notification is-primary">
+	<div class="notification is-warning">
 		<button class="delete"></button>
 		{{message}}
 	</div>
@@ -88,6 +88,7 @@
 
 		{% endblock %}
 	</section>
+	<div class="block"></div>
 	<footer class="footer">
 		<div class="content has-text-centered">
 			<p>

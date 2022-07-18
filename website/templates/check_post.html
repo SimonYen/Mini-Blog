@@ -7,14 +7,12 @@
 	<div class="content">
 		<h1 class="title">{{post.title}}</h1>
 		<h2 class="subtitle">
-			<span class="tag is-info">{{post.user.username}}</span>
-			<span class="tag is-success">{{post.date_created}}</span>
+			<span class="tag is-info">作者：{{post.user.username}}</span>
+			<span class="tag is-success">创作时间：{{post.date_created}}</span>
 		</h2>
 	</div>
 </div>
 <div class="box">
-	{% filter markdown %}
-	{{post.content}}
-	{% endfilter %}
+	{{post.content|markdown|safe}}
 </div>
 {% endblock %}

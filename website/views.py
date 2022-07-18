@@ -33,7 +33,7 @@ def create_post():
 @views.route('/posts/<id>')
 def check_post(id):
     p = Post.query.filter_by(id=id).first()
-    return render_template('check_post.html', post=p, user=current_user)
+    return render_template('check_post.html', post=p , user=current_user)
 
 
 
