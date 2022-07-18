@@ -5,8 +5,8 @@
 {% block content %}
 <div class="box">
 	<form method="post">
-		<input class="input is-medium" type="text" placeholder="标题" name="title">
-		{{ ckeditor.create() }}
+		<input class="input is-medium" type="text" placeholder="标题" name="title" value="{{post.title}}">
+		{{ ckeditor.create(value=post.content) }}
 		<button class="button is-medium is-warning ">提交</button>
 	</form>
 </div>

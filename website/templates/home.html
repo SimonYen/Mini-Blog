@@ -29,9 +29,9 @@
 </div>
 <div class="box">
 	<div class="buttons are-medium">
-		<a class="button is-primary is-light" href="{{ url_for('views.check_post' , id =  post.id) }}">查看</a>
+		<a class="button is-primary is-light" href="{{ url_for('views.view_post' , id =  post.id) }}">查看</a>
 		{% if user.id == post.author %}
-		<a class="button is-link is-light">修改</a>
+		<a class="button is-link is-light" href="{{ url_for('views.motify_post' , id = post.id) }}">修改</a>
 		<a class="button is-danger is-light" href="{{ url_for('views.delete_post' , id = post.id) }}">删除</a>
 		{% endif %}
 	</div>

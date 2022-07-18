@@ -2,14 +2,13 @@ from os import path
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_mdeditor import MDEditor
-from flaskext.markdown import Markdown
+from flask_ckeditor import CKEditor
 
 BASEDIR = path.abspath(path.dirname(__file__))
 DB_NAME = 'database.db'
 
 db = SQLAlchemy()
-mdeditor = MDEditor()
+ckeditor=CKEditor()
 
 
 def create_app():
@@ -20,8 +19,7 @@ def create_app():
     app.config['SQLALCHEMY_COMMIT_TEARDOWN'] = True
     app.config['MDEDITOR_FILE_UPLOADER'] = path.join(BASEDIR, 'uploads')
     db.init_app(app)
-    mdeditor.init_app(app)
-    Markdown(app)
+    ckeditor.init_app(app)
 
     from .views import views
     from .auth import auth
@@ -29,7 +27,7 @@ def create_app():
     app.register_blueprint(views)
     app.register_blueprint(auth)
 
-    from .models import User, Post
+    from .models import User
 
     create_database(app)
 

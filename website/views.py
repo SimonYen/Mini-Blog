@@ -17,7 +17,7 @@ def home():
 def create_post():
     if request.method == 'POST':
         title = request.form.get('title')
-        content = request.form.get('mdeditor')
+        content = request.form.get('ckeditor')
         if not content:
             flash('帖子内容为空！', category='error')
         else:
@@ -30,10 +30,25 @@ def create_post():
     return render_template('create_post.html', user=current_user)
 
 
-@views.route('/posts/<id>')
-def check_post(id):
+@views.route('/view_post/<id>')
+def view_post(id):
     p = Post.query.filter_by(id=id).first()
-    return render_template('check_post.html', post=p , user=current_user)
+    return render_template('view_post.html', post=p , user=current_user)
+
+@views.route('/motify_post/<id>', methods=['POST', 'GET'])
+@login_required
+def motify_post(id):
+    p = Post.query.filter_by(id=id).first()
+    if request.method=='POST':
+        if p.author!=current_user.id:
+            flash('你无权修改他人的帖子！')
+        else:
+            p.title = request.form.get('title')
+            p.content = request.form.get('ckeditor')
+            db.session.commit()
+            flash('帖子修改成功。')
+            return redirect(url_for('views.view_post',id=p.id))
+    return render_template('motify_post.html',post=p,user=current_user)
 
 
 
