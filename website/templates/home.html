@@ -8,7 +8,7 @@
 <div class="card">
 	<header class="card-header">
 		<p class="card-header-title">
-			{{post.title}}
+			<span class="icon-cup"></span>{{post.title}}
 		</p>
 		<button class="card-header-icon" aria-label="more options">
 			<span class="icon">
@@ -22,17 +22,20 @@
 				<span class="tag is-info">作者：{{post.user.username}}</span>
 			</h1>
 			<h2 class="subtitle">
-				<span class="tag is-success">创作时间：{{post.date_created}}</span>
+				<span class="tag is-success">创作时间：{{post.created_time}}</span>
 			</h2>
 		</div>
 	</div>
 </div>
 <div class="box">
 	<div class="buttons are-medium">
-		<a class="button is-primary is-light" href="{{ url_for('views.view_post' , id =  post.id) }}">查看</a>
+		<a class="button is-primary is-light" href="{{ url_for('views.view_post' , id =  post.id) }}"><span
+				class="icon-book-open"></span>查看</a>
 		{% if user.id == post.author %}
-		<a class="button is-link is-light" href="{{ url_for('views.motify_post' , id = post.id) }}">修改</a>
-		<a class="button is-danger is-light" href="{{ url_for('views.delete_post' , id = post.id) }}">删除</a>
+		<a class="button is-link is-light" href="{{ url_for('views.motify_post' , id = post.id) }}"><span
+				class="icon-pencil"></span>修改</a>
+		<a class="button is-danger is-light" href="{{ url_for('views.delete_post' , id = post.id) }}"><span
+				class="icon-minus"></span>删除</a>
 		{% endif %}
 	</div>
 </div>

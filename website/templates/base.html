@@ -6,6 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css">
 	<title>
 		{% block title %}
 		迷你博客
@@ -30,11 +32,11 @@
 		<div id="navbarBasicExample" class="navbar-menu">
 			<div class="navbar-start">
 				<a class="navbar-item" href="{{ url_for('views.home' ) }}">
-					主页
+					<span class="icon-home"></span>主页
 				</a>
 				{% if user.is_authenticated %}
 				<a class="navbar-item" href="{{ url_for('views.create_post' ) }}">
-					新建帖子
+					<span class="icon-plus"></span>新建帖子
 				</a>
 				{% endif %}
 
@@ -44,8 +46,8 @@
 					</a>
 
 					<div class="navbar-dropdown">
-						<a class="navbar-item">
-							Jobs
+						<a class="navbar-item" href="">
+							文件共享
 						</a>
 						<a class="navbar-item">
 							联系作者
@@ -62,13 +64,14 @@
 				<div class="navbar-item">
 					<div class="buttons">
 						{% if user.is_authenticated %}
-						<a href="{{ url_for('auth.logout' ) }}" class="button is-danger">登出</a>
+						<a href="{{ url_for('auth.logout' ) }}" class="button is-danger"><span
+								class="icon-logout"></span>登出</a>
 						{% else %}
 						<a class="button is-primary" href="{{ url_for('auth.signup' ) }}">
-							<strong>注册</strong>
+							<span class="icon-user"></span><strong>注册</strong>
 						</a>
 						<a class="button is-info" href="{{ url_for('auth.login' ) }}">
-							登录
+							<span class="icon-login"></span>登录
 						</a>
 
 						{% endif %}
@@ -92,7 +95,8 @@
 	<footer class="footer">
 		<div class="content has-text-centered">
 			<p>
-				<strong>迷你博客</strong>由<a href="https://github.com/SimonYen">Simon Yen</a>编写，欢迎star！
+				<strong>迷你博客</strong>由<a href="https://github.com/SimonYen">Simon Yen</a>编写，欢迎
+				<a href="https://github.com/SimonYen/Mini-Blog"><span class="icon-star"></span></a>！
 			</p>
 		</div>
 	</footer>

@@ -3,12 +3,14 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_ckeditor import CKEditor
+from flask_moment import Moment
 
 BASEDIR = path.abspath(path.dirname(__file__))
 DB_NAME = 'database.db'
 
 db = SQLAlchemy()
 ckeditor=CKEditor()
+moment=Moment()
 
 
 def create_app():
@@ -20,6 +22,7 @@ def create_app():
     app.config['MDEDITOR_FILE_UPLOADER'] = path.join(BASEDIR, 'uploads')
     db.init_app(app)
     ckeditor.init_app(app)
+    moment.init_app(app)
 
     from .views import views
     from .auth import auth

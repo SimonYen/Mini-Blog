@@ -7,7 +7,9 @@
 	<form method="post">
 		<input class="input is-medium" type="text" placeholder="标题" name="title" value="{{post.title}}">
 		{{ ckeditor.create(value=post.content) }}
-		<button class="button is-medium is-warning ">提交</button>
+		<button class="button is-medium is-warning ">
+			<span class="icon-cloud-upload"></span>提交
+		</button>
 	</form>
 </div>
 {% endblock %}
