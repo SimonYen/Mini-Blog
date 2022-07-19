@@ -11,6 +11,13 @@ def home():
     posts = Post.query.all()
     return render_template('home.html', user=current_user, posts=posts)
 
+@views.route('/my_posts')
+@login_required
+def my_posts():
+    posts=Post.query.filter_by(author=current_user.id).all()
+    return render_template('home.html', user=current_user, posts=posts)
+
+
 
 @views.route('/create_post', methods=['POST', 'GET'])
 @login_required

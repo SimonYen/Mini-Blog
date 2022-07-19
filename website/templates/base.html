@@ -38,6 +38,9 @@
 				<a class="navbar-item" href="{{ url_for('views.create_post' ) }}">
 					<span class="icon-plus"></span>新建帖子
 				</a>
+				<a class="navbar-item" href="{{ url_for('views.my_posts' ) }}">
+					<span class="icon-mustache"></span>我的帖子
+				</a>
 				{% endif %}
 
 				<div class="navbar-item has-dropdown is-hoverable">
@@ -47,14 +50,14 @@
 
 					<div class="navbar-dropdown">
 						<a class="navbar-item" href="">
-							文件共享
+							<span class="icon-cloud-download"></span>迷你网盘
 						</a>
 						<a class="navbar-item">
-							联系作者
+							<span class="icon-present"></span>彩蛋
 						</a>
 						<hr class="navbar-divider">
 						<a class="navbar-item" href="{{ url_for('views.about' ) }}">
-							关于作者
+							<span class="icon-ghost"></span>关于作者
 						</a>
 					</div>
 				</div>
@@ -95,8 +98,13 @@
 	<footer class="footer">
 		<div class="content has-text-centered">
 			<p>
-				<strong>迷你博客</strong>由<a href="https://github.com/SimonYen">Simon Yen</a>编写，欢迎
-				<a href="https://github.com/SimonYen/Mini-Blog"><span class="icon-star"></span></a>！
+				<strong>迷你博客</strong>由
+				<a href="https://github.com/SimonYen">
+					<span class="icon-social-github"></span>Simon Yen
+				</a>编写，欢迎
+				<a href="https://github.com/SimonYen/Mini-Blog">
+					<span class="icon-star"></span>
+				</a>！
 			</p>
 		</div>
 	</footer>
