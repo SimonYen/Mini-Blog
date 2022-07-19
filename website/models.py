@@ -1,6 +1,12 @@
 from . import db
 from flask_login import UserMixin
-from sqlalchemy import func
+from datetime import datetime
+from pytz import timezone
+
+def shanghai_time():
+    now_utc=datetime.now(timezone('UTC'))
+    now_shanghai=now_utc.astimezone(timezone('Asia/Shanghai'))
+    return now_shanghai.strftime('%Y年%m月%d日 %H:%M')
 
 
 
@@ -18,4 +24,4 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     author = db.Column(db.Integer, db.ForeignKey(
         'user.id', ondelete='CASCADE'), nullable=False)
-    created_time = db.Column(db.DateTime,default=func.now())
+    created_time = db.Column(db.String(200),default=shanghai_time)
