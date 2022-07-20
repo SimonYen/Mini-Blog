@@ -6,6 +6,7 @@ from flask_ckeditor import CKEditor
 from flask_moment import Moment
 
 BASEDIR = path.abspath(path.dirname(__file__))
+UPLOAD_FOLDER = path.join(BASEDIR,'data')
 DB_NAME = 'database.db'
 
 db = SQLAlchemy()

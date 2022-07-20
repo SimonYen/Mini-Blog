@@ -1,0 +1,18 @@
+{% extends 'netpan.html' %}
+{% block netpan_content %}
+<div class="box">
+	<form method="post">
+		<div class="field">
+			<label class="label">文件名</label>
+			<div class="control">
+				<input class="input" type="text" value="{{file.name}}" name="name">
+			</div>
+		</div>
+		<div class="control">
+			<button class="button is-primary is-large" type="submit">
+				<span class="icon-plane"></span>起飞
+			</button>
+		</div>
+	</form>
+</div>
+{% endblock %}
