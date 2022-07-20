@@ -153,3 +153,13 @@ def download_file(id):
             flash('你没有权限下载其他人的文件！')
         else:
             return send_file(os.path.join(UPLOAD_FOLDER,file.name))
+
+@views.route('/eggs',methods=['POST','GET'])
+def eggs():
+    if request.method=='POST':
+        text=request.form.get('text')
+        if text=='lsp':
+            pass
+        else:
+            flash('小伙子悟性不够哈哈哈。')
+    return render_template('eggs.html',user=current_user)

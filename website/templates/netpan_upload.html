@@ -2,25 +2,21 @@
 
 {% block netpan_content %}
 <form method="post" enctype="multipart/form-data">
-	<div class="columns">
-		<div class="column is-four-fifths">
-			<div class="file is-large is-primary">
-				<label class="file-label">
-					<input class="file-input" type="file" name="file">
-					<span class="file-cta">
-						<span class="file-label">
-							选择一个文件
-						</span>
+	<div class="field is-grouped is-grouped-centered">
+		<div class="file is-large is-primary">
+			<label class="file-label">
+				<input class="file-input" type="file" name="file">
+				<span class="file-cta">
+					<span class="file-label">
+						选择一个文件
 					</span>
-				</label>
-			</div>
+				</span>
+			</label>
 		</div>
-		<div class="column">
-			<div class="control">
-				<button class="button is-primary is-large" type="submit">
-					<span class="icon-plane"></span>起飞
-				</button>
-			</div>
+		<div class="control">
+			<button class="button is-link is-large" type="submit">
+				<span class="icon-plane"></span>起飞
+			</button>
 		</div>
 	</div>
 </form>

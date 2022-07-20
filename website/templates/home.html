@@ -23,15 +23,17 @@
 	</div>
 </div>
 <div class="box">
-	<div class="buttons are-medium">
-		<a class="button is-primary is-light" href="{{ url_for('views.view_post' , id =  post.id) }}"><span
-				class="icon-book-open"></span>查看</a>
-		{% if user.id == post.author %}
-		<a class="button is-link is-light" href="{{ url_for('views.motify_post' , id = post.id) }}"><span
-				class="icon-pencil"></span>修改</a>
-		<a class="button is-danger is-light" href="{{ url_for('views.delete_post' , id = post.id) }}"><span
-				class="icon-minus"></span>删除</a>
-		{% endif %}
+	<div class="field is-grouped is-grouped-right">
+		<div class="buttons are-medium">
+			<a class="button is-primary is-light" href="{{ url_for('views.view_post' , id =  post.id) }}"><span
+					class="icon-book-open"></span>查看</a>
+			{% if user.id == post.author %}
+			<a class="button is-link is-light" href="{{ url_for('views.motify_post' , id = post.id) }}"><span
+					class="icon-pencil"></span>修改</a>
+			<a class="button is-danger is-light" href="{{ url_for('views.delete_post' , id = post.id) }}"><span
+					class="icon-minus"></span>删除</a>
+			{% endif %}
+		</div>
 	</div>
 </div>
 <div class="block"></div>

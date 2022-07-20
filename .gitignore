@@ -3,3 +3,4 @@ __pycache__/**
 website/__pycache__/**
 website/database.db
 website/data/**
+website/lsp/**
