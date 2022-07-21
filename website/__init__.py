@@ -1,7 +1,7 @@
 from os import path
-from flask import Flask
+from flask import Flask,render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from flask_login import LoginManager,current_user
 from flask_ckeditor import CKEditor
 from flask_moment import Moment
 
@@ -14,6 +14,11 @@ db = SQLAlchemy()
 ckeditor=CKEditor()
 moment=Moment()
 
+def page_not_found(e):
+    return render_template('errors/404.html',user=current_user),404
+
+def interal_error(e):
+    return render_template('errors/500.html',user=current_user),500
 
 def create_app():
     app = Flask(__name__)
@@ -22,6 +27,8 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['SQLALCHEMY_COMMIT_TEARDOWN'] = True
     app.config['MDEDITOR_FILE_UPLOADER'] = path.join(BASEDIR, 'uploads')
+    app.register_error_handler(404,page_not_found)
+    app.register_error_handler(500,interal_error)
     db.init_app(app)
     ckeditor.init_app(app)
     moment.init_app(app)
