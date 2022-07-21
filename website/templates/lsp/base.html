@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- UIkit CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.1/dist/css/uikit.min.css" />
+
+	<!-- UIkit JS -->
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.1/dist/js/uikit.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.1/dist/js/uikit-icons.min.js"></script>
+	<title>
+		{% block title %}
+
+		{% endblock %}
+	</title>
+</head>
+
+<body>
+	<header>
+		<div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
+			<nav class="uk-navbar-container uk-margin" uk-navbar>
+				<div class="uk-navbar-center">
+
+					<div class="uk-navbar-center-left">
+						<ul class="uk-navbar-nav">
+							<li><a href="{{ url_for('lsp.lsp_upload' ) }}" uk-icon="icon: cloud-upload">上传</a></li>
+						</ul>
+					</div>
+					<a class="uk-navbar-item uk-logo" href="{{ url_for('lsp.lsp_home' ) }}">
+						<img src="{{ url_for('static' , filename='lsp.png') }}" width="100" height="50">
+					</a>
+					<div class="uk-navbar-center-right">
+						<ul class="uk-navbar-nav">
+							<li><a href="{{ url_for('lsp.lsp_manage' ) }}" uk-icon="icon: database">管理</a></li>
+						</ul>
+					</div>
+
+				</div>
+			</nav>
+		</div>
+	</header>
+	<main>
+		<div uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 500">
+			{% block content %}
+
+			{% endblock %}
+		</div>
+	</main>
+	<footer>
+		<div class="uk-container">
+			<strong>工大计算机浮世草编写</strong>
+			<a href="https://github.com/SimonYen" class="uk-icon-button" uk-icon="github"></a>
+		</div>
+	</footer>
+</body>
+
+</html>

@@ -7,6 +7,7 @@ from flask_moment import Moment
 
 BASEDIR = path.abspath(path.dirname(__file__))
 UPLOAD_FOLDER = path.join(BASEDIR,'data')
+LSP_FOLDER=path.join(BASEDIR,'static/lsp')
 DB_NAME = 'database.db'
 
 db = SQLAlchemy()
@@ -27,9 +28,11 @@ def create_app():
 
     from .views import views
     from .auth import auth
+    from .lsp import lsp
 
     app.register_blueprint(views)
     app.register_blueprint(auth)
+    app.register_blueprint(lsp)
 
     from .models import User
 

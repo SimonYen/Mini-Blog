@@ -159,7 +159,7 @@ def eggs():
     if request.method=='POST':
         text=request.form.get('text')
         if text=='lsp':
-            pass
+            return redirect(url_for('lsp.lsp_home'))
         else:
             flash('小伙子悟性不够哈哈哈。')
     return render_template('eggs.html',user=current_user)

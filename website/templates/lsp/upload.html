@@ -1,0 +1,22 @@
+{% extends 'lsp/base.html' %}
+{% block title %}
+上传色色
+{% endblock %}
+{% block content %}
+<div>
+	<div class="uk-card uk-card-hover uk-card-secondary">
+		<div class="uk-card-header">
+			<h3 class="uk-card-title">请选择你的文件进行上传</h3>
+		</div>
+		<div class="uk-card-body">
+			作为一个有底线的lsp，请不要上传人兽，未成年，男同的东西。
+		</div>
+		<div class="uk-card-footer">
+			<form method="post" enctype="multipart/form-data">
+				<input type="file" name="file" id="file">
+				<button type="submit" class="uk-button uk-button-default" uk-icon="icon: check">提交</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
