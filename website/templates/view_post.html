@@ -8,11 +8,36 @@
 		<h1 class="title">{{post.title}}</h1>
 		<h2 class="subtitle">
 			<span class="tag is-info">作者：{{post.user.username}}</span>
-			<span class="tag is-success">创作时间：{{post.date_created}}</span>
+			<span class="tag is-success">创作时间：{{post.created_time}}</span>
 		</h2>
+		{{post.content|safe}}
 	</div>
 </div>
 <div class="box">
-	{{post.content|safe}}
+	<span class="tag is-warning is-light is-large">评论：</span>
+	{% for comment in comments %}
+	<div class="content is-small">
+		<h1>{{comment.author_name}}</h1>
+		<p>{{comment.content}}</p>
+	</div>
+	{% endfor %}
 </div>
+{% if user.is_authenticated %}
+<div class="box">
+	<article class="media">
+		<div class="media-content">
+			<form method="post">
+				<div class="field">
+					<p class="control">
+						<textarea class="textarea" placeholder="说句骚话评论吧。。。" name="comment" required></textarea>
+					</p>
+				</div>
+				<button class="button is-medium is-info">
+					<span class="icon-feed"></span>评论
+				</button>
+			</form>
+		</div>
+	</article>
+</div>
+{% endif %}
 {% endblock %}

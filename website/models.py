@@ -24,4 +24,15 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     author = db.Column(db.Integer, db.ForeignKey(
         'user.id', ondelete='CASCADE'), nullable=False)
+    comments = db.relationship('Comment', backref='post', passive_deletes=True)
     created_time = db.Column(db.String(200),default=shanghai_time)
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(300), nullable=False)
+    author = db.Column(db.Integer, db.ForeignKey(
+        'user.id', ondelete='CASCADE'), nullable=False)
+    author_name=db.Column(db.String(300))
+    article = db.Column(db.Integer, db.ForeignKey('post.id', ondelete='CASCADE'), nullable=False)
+    created_time = db.Column(db.String(200),default=shanghai_time)
+

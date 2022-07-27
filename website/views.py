@@ -1,7 +1,7 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for,send_file
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from . import db
-from .models import Post
+from .models import Post,Comment
 
 views = Blueprint("views", __name__)
 
@@ -37,10 +37,21 @@ def create_post():
     return render_template('create_post.html', user=current_user)
 
 
-@views.route('/view_post/<id>')
+@views.route('/view_post/<id>',methods=['POST','GET'])
 def view_post(id):
     p = Post.query.filter_by(id=id).first()
-    return render_template('view_post.html', post=p , user=current_user)
+    comments=Comment.query.filter_by(article=id).all()
+    if request.method == 'POST':
+        if not current_user.is_authenticated:
+            flash('请先登录再评论他人帖子！')
+        else:
+            content=request.form.get('comment')
+            c=Comment(content=content,author=current_user.id,article=p.id,author_name=current_user.username)
+            db.session.add(c)
+            db.session.commit()
+            flash('评论成功。')
+            return redirect(url_for('views.view_post', id=p.id))
+    return render_template('view_post.html', post=p , user=current_user , comments=comments)
 
 @views.route('/motify_post/<id>', methods=['POST', 'GET'])
 @login_required

@@ -42,18 +42,9 @@
 					<span class="icon-mustache"></span>我的帖子
 				</a>
 				{% endif %}
-
-				<div class="navbar-item has-dropdown is-hoverable">
-					<a class="navbar-link">
-						更多
-					</a>
-
-					<div class="navbar-dropdown">
-						<a class="navbar-item" href="{{ url_for('views.about' ) }}">
-							<span class="icon-ghost"></span>关于作者
-						</a>
-					</div>
-				</div>
+				<a class="navbar-item" href="{{ url_for('views.about' ) }}">
+					<span class="icon-ghost"></span>关于作者
+				</a>
 			</div>
 
 			<div class="navbar-end">
