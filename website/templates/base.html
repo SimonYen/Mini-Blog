@@ -8,6 +8,27 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css">
+	<style>
+		body {
+			background-image: url("{{url_for('static', filename='flowers.png')}}");
+			background-color: #cccccc;
+		}
+
+		.box {
+			background-image: url("{{url_for('static', filename='white.png')}}");
+			background-color: #cccccc;
+		}
+
+		.navbar {
+			background-image: url("{{url_for('static', filename='watercolor.png')}}");
+			background-color: #cccccc;
+		}
+
+		.footer {
+			background-image: url("{{url_for('static', filename='pattern.png')}}");
+			background-color: #cccccc;
+		}
+	</style>
 	<title>
 		{% block title %}
 		迷你博客
@@ -16,7 +37,7 @@
 </head>
 
 <body>
-	<nav class="navbar is-primary has-shadow" role="navigation" aria-label="main navigation">
+	<nav class="navbar is-light has-shadow" role="navigation" aria-label="main navigation">
 		<div class="navbar-brand">
 			<a class="navbar-item" href="{{ url_for('views.home' ) }}">
 				<img src="{{ url_for('static' , filename = 'logo.png') }}">
