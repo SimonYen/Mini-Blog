@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+迷你博客-广场
+{% endblock %}
+
+{% block content %}
+{% for post in posts %}
+<div class="card">
+	<header class="card-header">
+		<p class="card-header-title">
+			<span class="icon-cup"></span>{{post.title}}
+		</p>
+	</header>
+	<div class="card-content">
+		<div class="content">
+			<h1 class="title">
+				<span class="tag is-info">作者：{{post.user.username}}</span>
+			</h1>
+			<h2 class="subtitle">
+				<span class="tag is-success">创作时间：{{post.created_time}}</span>
+			</h2>
+			<div class="field is-grouped is-grouped-right">
+				<div class="buttons are-medium">
+					<a class="button is-primary is-light" href="{{ url_for('views.view_post' , id =  post.id) }}"><span
+							class="icon-book-open"></span>查看</a>
+					{% if user.id == post.author %}
+					<a class="button is-link is-light" href="{{ url_for('views.motify_post' , id = post.id) }}"><span
+							class="icon-pencil"></span>修改</a>
+					<a class="button is-danger is-light" href="{{ url_for('views.delete_post' , id = post.id) }}"><span
+							class="icon-minus"></span>删除</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="block"></div>
+{% endfor %}
+{% endblock %}

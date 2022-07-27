@@ -1,40 +1,15 @@
 {% extends 'base.html' %}
+
 {% block title %}
 迷你博客-主页
 {% endblock %}
 
 {% block content %}
-{% for post in posts %}
-<div class="card">
-	<header class="card-header">
-		<p class="card-header-title">
-			<span class="icon-cup"></span>{{post.title}}
-		</p>
-	</header>
-	<div class="card-content">
-		<div class="content">
-			<h1 class="title">
-				<span class="tag is-info">作者：{{post.user.username}}</span>
-			</h1>
-			<h2 class="subtitle">
-				<span class="tag is-success">创作时间：{{post.created_time}}</span>
-			</h2>
-			<div class="field is-grouped is-grouped-right">
-				<div class="buttons are-medium">
-					<a class="button is-primary is-light" href="{{ url_for('views.view_post' , id =  post.id) }}"><span
-							class="icon-book-open"></span>查看</a>
-					{% if user.id == post.author %}
-					<a class="button is-link is-light" href="{{ url_for('views.motify_post' , id = post.id) }}"><span
-							class="icon-pencil"></span>修改</a>
-					<a class="button is-danger is-light" href="{{ url_for('views.delete_post' , id = post.id) }}"><span
-							class="icon-minus"></span>删除</a>
-					{% endif %}
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="content is-large">
+	<h1>迷你博客</h1>
+	<p>一个基于Flask框架编写的小清新博客网站，前端用的CSS框架是Bulma。</p>
+	<p>只具有基础的博客增删查改功能，主要是为了让我入门web开发的。</p>
+	<p>同时我也想把这个网站当成我的一个学习博客，温故知新。</p>
+	<p>希望能惊艳到你~</p>
 </div>
-<div class="block"></div>
-
-{% endfor %}
 {% endblock %}
