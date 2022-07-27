@@ -1,8 +1,7 @@
-import os
 from flask import Blueprint, flash, redirect, render_template, request, url_for,send_file
 from flask_login import current_user, login_required
-from . import db,UPLOAD_FOLDER
-from .models import Post,File
+from . import db
+from .models import Post
 
 views = Blueprint("views", __name__)
 
@@ -78,88 +77,3 @@ def delete_post(id):
 @views.route('/about')
 def about():
     return render_template('about.html', user=current_user)
-
-
-
-@views.route('/netpan')
-@login_required
-def netpan_home():
-    return render_template('netpan.html',user=current_user)
-
-@views.route('/netpan_upload',methods=['POST','GET'])
-@login_required
-def netpan_upload():
-    if request.method == 'POST':
-        file=request.files['file']
-        if file:
-            f=File(name=file.filename,owner=current_user.id)
-            file.save(os.path.join(UPLOAD_FOLDER,file.filename))
-            db.session.add(f)
-            db.session.commit()
-            flash('上传成功。')
-        else:
-            flash('文件为空！文件传输过程失败！')
-    return render_template('netpan_upload.html',user=current_user)
-
-@views.route('/netpan_control.html')
-@login_required
-def netpan_control():
-    files=File.query.filter_by(owner=current_user.id).all()
-    return render_template('netpan_control.html',user=current_user,files=files)
-
-@views.route('/motify_file/<id>',methods=['POST','GET'])
-@login_required
-def motify_file(id):
-    file=File.query.filter_by(id=id).first()
-    if not file:
-        flash('文件不存在！')
-    elif file.owner!=current_user.id:
-        flash('你无权修改他人的文件名！')
-    else:
-        if request.method=='POST':
-            if os.path.isfile(os.path.join(UPLOAD_FOLDER,file.name)):
-                os.rename(os.path.join(UPLOAD_FOLDER,file.name),os.path.join(UPLOAD_FOLDER,request.form.get('name')))
-            file.name=request.form.get('name')
-            db.session.commit()
-            flash('文件名修改成功。')
-            return redirect(url_for('views.netpan_control'))
-    return render_template('motify_file.html',file=file,user=current_user)
-
-@views.route('/delete_file/<id>')
-@login_required
-def delete_file(id):
-    file=File.query.filter_by(id=id).first()
-    if not file:
-        flash('没有这个文件！')
-    else:
-        if file.owner!=current_user.id:
-            flash('你没有权限删除其他人的文件！')
-        else:
-            if os.path.isfile(os.path.join(UPLOAD_FOLDER,file.name)):
-                os.remove(os.path.join(UPLOAD_FOLDER,file.name))
-            db.session.delete(file)
-            db.session.commit()
-            flash('删除成功。')
-            return redirect(url_for('views.netpan_control'))
-
-@views.route('/download_file/<id>')
-@login_required
-def download_file(id):
-    file=File.query.filter_by(id=id).first()
-    if not file:
-        flash('没有这个文件！')
-    else:
-        if file.owner!=current_user.id:
-            flash('你没有权限下载其他人的文件！')
-        else:
-            return send_file(os.path.join(UPLOAD_FOLDER,file.name))
-
-@views.route('/eggs',methods=['POST','GET'])
-def eggs():
-    if request.method=='POST':
-        text=request.form.get('text')
-        if text=='lsp':
-            return redirect(url_for('lsp.lsp_home'))
-        else:
-            flash('小伙子悟性不够哈哈哈。')
-    return render_template('eggs.html',user=current_user)

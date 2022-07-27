@@ -1,24 +1,17 @@
 from os import path
 from flask import Flask,render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager,current_user
+from flask_login import LoginManager
 from flask_ckeditor import CKEditor
 from flask_moment import Moment
 
 BASEDIR = path.abspath(path.dirname(__file__))
-UPLOAD_FOLDER = path.join(BASEDIR,'data')
-LSP_FOLDER=path.join(BASEDIR,'static/lsp')
 DB_NAME = 'database.db'
 
 db = SQLAlchemy()
 ckeditor=CKEditor()
 moment=Moment()
 
-def page_not_found(e):
-    return render_template('errors/404.html',user=current_user),404
-
-def interal_error(e):
-    return render_template('errors/500.html',user=current_user),500
 
 def create_app():
     app = Flask(__name__)
@@ -26,20 +19,16 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['SQLALCHEMY_COMMIT_TEARDOWN'] = True
-    app.config['MDEDITOR_FILE_UPLOADER'] = path.join(BASEDIR, 'uploads')
-    app.register_error_handler(404,page_not_found)
-    app.register_error_handler(500,interal_error)
+    app.config['MDEDITOR_FILE_UPLOADER'] = path.join(BASEDIR, 'editor_cache')
     db.init_app(app)
     ckeditor.init_app(app)
     moment.init_app(app)
 
     from .views import views
     from .auth import auth
-    from .lsp import lsp
 
     app.register_blueprint(views)
     app.register_blueprint(auth)
-    app.register_blueprint(lsp)
 
     from .models import User
 

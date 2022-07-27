@@ -16,7 +16,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(300), unique=True)
     password = db.Column(db.String(100), unique=True)
     posts = db.relationship('Post', backref='user', passive_deletes=True)
-    files = db.relationship('File', backref='user', passive_deletes=True)
 
 
 class Post(db.Model):
@@ -26,11 +25,3 @@ class Post(db.Model):
     author = db.Column(db.Integer, db.ForeignKey(
         'user.id', ondelete='CASCADE'), nullable=False)
     created_time = db.Column(db.String(200),default=shanghai_time)
-
-
-class File(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(150),nullable=False)
-    owner = db.Column(db.Integer, db.ForeignKey(
-        'user.id', ondelete='CASCADE'), nullable=False)
-    uploaded_time = db.Column(db.String(200),default=shanghai_time)
