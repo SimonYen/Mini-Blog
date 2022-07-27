@@ -9,12 +9,14 @@ views = Blueprint("views", __name__)
 @views.route('/')
 def home():
     posts = Post.query.all()
+    posts.reverse()
     return render_template('home.html', user=current_user, posts=posts)
 
 @views.route('/my_posts')
 @login_required
 def my_posts():
     posts=Post.query.filter_by(author=current_user.id).all()
+    posts.reverse()
     return render_template('home.html', user=current_user, posts=posts)
 
 
