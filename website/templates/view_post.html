@@ -10,19 +10,18 @@
 		<span class="tag is-success">创作时间：{{post.created_time}}</span>
 	</h2>
 	<h3>
-		<span class="tag is-link is-light">内容：</span>
+		<span class="tag is-link is-large">内容：</span>
 	</h3>
 	{{post.content|safe}}
 </div>
-<div class="box">
-	<span class="tag is-warning is-light is-large">评论：</span>
-	{% for comment in comments %}
-	<div class="content is-small">
-		<h1>{{comment.author_name}}</h1>
-		<p>{{comment.content}}</p>
-	</div>
-	{% endfor %}
+<span class="tag is-warning is-light is-light">评论：</span>
+{% for comment in comments %}
+<div class="content is-small">
+	<h1>{{comment.author_name}}</h1>
+	<p>{{comment.content}}</p>
 </div>
+{% endfor %}
+<hr>
 {% if user.is_authenticated %}
 <div class="box">
 	<article class="media">
