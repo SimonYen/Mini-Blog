@@ -6,7 +6,7 @@ from flask_ckeditor import CKEditor
 from flask_moment import Moment
 
 BASEDIR = path.abspath(path.dirname(__file__))
-DB_NAME = 'database.db'
+# DB_NAME = 'database.db'
 
 db = SQLAlchemy()
 ckeditor=CKEditor()
@@ -16,7 +16,8 @@ moment=Moment()
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'Simon Yen'
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://SimonYen:yanzengyi123@SimonYen.mysql.pythonanywhere-services.com/SimonYen$blog'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     app.config['SQLALCHEMY_COMMIT_TEARDOWN'] = True
     app.config['MDEDITOR_FILE_UPLOADER'] = path.join(BASEDIR, 'editor_cache')
@@ -32,7 +33,7 @@ def create_app():
 
     from .models import User
 
-    create_database(app)
+    db.create_all(app=app)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -45,7 +46,7 @@ def create_app():
     return app
 
 
-def create_database(app):
-    if not path.exists('website/'+DB_NAME):
-        db.create_all(app=app)
-        print('已创建数据库！')
+# def create_database(app):
+#     if not path.exists('website/'+DB_NAME):
+#         db.create_all(app=app)
+#         print('已创建数据库！')
